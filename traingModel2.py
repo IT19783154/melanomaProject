@@ -45,14 +45,6 @@ for clss in cls:
 
         hog_img = cv2.adaptiveThreshold(hog_img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 199, 5)
 
-        # kernel = np.array([
-        #     [-1, 0, 1],
-        #     [-2, 0, 2],
-        #     [-1, 0, 1]
-        # ])
-        # hog_img = cv2.filter2D(hog_img, -1, kernel)
-        #hog_img = cv2.Canny(image=hog_img, threshold1=100, threshold2=200)
-
         hog_img = cv2.bitwise_not(hog_img)
 
         number_of_white_pix = np.sum(hog_img == 255)
@@ -69,9 +61,9 @@ for clss in cls:
             train_lable.append(x)
 
 ############################################################################################
-        cv2.imshow('hog',hog_img)
-        cv2.imshow('img', resize_img)
-        cv2.waitKey(1)
+        #cv2.imshow('hog',hog_img)
+        #cv2.imshow('img', resize_img)
+        #cv2.waitKey(1)
 
         save_parth = pre_prossess_img_parth+'/'+ clss
         cv2.imwrite(os.path.join(save_parth, jpg_image), resize_img)
