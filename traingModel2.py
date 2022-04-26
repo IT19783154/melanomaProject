@@ -15,7 +15,7 @@ train_data_anaysis = []
 first_lock = False
 
 
-part = 'orginal images'
+part = 'Shapning images'
 pre_prossess_img_parth = 'finalResizeIMG'
 #test_parth = 'predict images'
 
