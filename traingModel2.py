@@ -77,8 +77,8 @@ for clss in cls:
         cv2.imwrite(os.path.join(save_parth, jpg_image), resize_img)
 
 
-plt.plot(train_data_anaysis)
-plt.show()
+#plt.plot(train_data_anaysis)
+#plt.show()
 
 #print(train_lable)
 
