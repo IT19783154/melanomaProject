@@ -45,6 +45,14 @@ for clss in cls:
 
         hog_img = cv2.adaptiveThreshold(hog_img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 199, 5)
 
+        # kernel = np.array([
+        #     [-1, 0, 1],
+        #     [-2, 0, 2],
+        #     [-1, 0, 1]
+        # ])
+        # hog_img = cv2.filter2D(hog_img, -1, kernel)
+        #hog_img = cv2.Canny(image=hog_img, threshold1=100, threshold2=200)
+
         hog_img = cv2.bitwise_not(hog_img)
 
         number_of_white_pix = np.sum(hog_img == 255)
@@ -63,7 +71,7 @@ for clss in cls:
 ############################################################################################
         #cv2.imshow('hog',hog_img)
         #cv2.imshow('img', resize_img)
-        #cv2.waitKey(1)
+        cv2.waitKey(1)
 
         save_parth = pre_prossess_img_parth+'/'+ clss
         cv2.imwrite(os.path.join(save_parth, jpg_image), resize_img)
@@ -75,34 +83,36 @@ for clss in cls:
 #print(train_lable)
 
 svm2_data = np.array(train_data_anaysis)
-svm2_data = svm2_data.reshape((34 ,1))
+svm2_data = svm2_data.reshape((254 ,1))
 
 
 #used for get training data
 
 from sklearn.model_selection import train_test_split
 
-svm2_data1, X_test, train_lable1, Y_test = train_test_split(svm2_data, train_lable, test_size=0.2, random_state=5)
+svm2_data1, X_test, train_lable1, Y_test = train_test_split(svm2_data, train_lable, test_size=0.2, random_state=8)
 
 #classification
 
-clf = svm.SVC()
-clf = svm.SVC(gamma=0.01, C=100) #0.0.1
-clf.fit(svm2_data1,train_lable1)
-y_predict = clf.predict(X_test)
+model = svm.SVC()
+model = svm.SVC(kernel='linear', gamma=0.01, C=100) #0.0.1
+model.fit(svm2_data1,train_lable1)
+y_predict = model.predict(X_test)
 
-
-#clf = LinearSVC(max_iter=10000)
-#clf.fit(svm2_data1,train_lable1)
-
-#use for test accuracy
-
+"""
+from sklearn.svm import LinearSVC
+model = LinearSVC(max_iter=100001)
+model.fit(svm2_data1,train_lable1)
+y_predict = model.predict(X_test)
+"""
 
 print("Accuracy:",metrics.accuracy_score(Y_test, y_predict))
 
 from sklearn.metrics import classification_report
 
 print(classification_report(Y_test, y_predict ))
+
+
 
 
 # save file
@@ -112,14 +122,9 @@ print(classification_report(Y_test, y_predict ))
 ################### finish training part##################################
 
 
-
-
-
-
-
 ################### predict script ##################################
 
-
+"""
 test_parth = 'predict images'
 
 while True:
@@ -162,6 +167,6 @@ while True:
     prw = cv2.putText(prw, rezalt, (50,450), cv2.FONT_HERSHEY_SIMPLEX,1, (255,0,0), 2, cv2.LINE_AA)
     cv2.imshow('test image', prw)
     cv2.waitKey(1)
-
+"""
 
 ################### finish predict part##################################
